@@ -7,6 +7,7 @@ package example.model;
  */
 public class SimpleBankAccount implements BankAccount {
 
+    public static final int WITHDRAWAL_FEE = 1;
     private double balance;
     private final AccountHolder holder;
 
@@ -26,23 +27,26 @@ public class SimpleBankAccount implements BankAccount {
 
     @Override
     public void deposit(final int userID, final double amount) {
-        if (checkUser(userID)) {
-            this.balance += amount;
-        }
+        checkUser(userID);
+        this.balance += amount;
     }
 
     @Override
     public void withdraw(final int userID, final double amount) {
-        if (checkUser(userID) && isWithdrawAllowed(amount)) {
-            this.balance -= amount;
+        if (!isWithdrawAllowed(amount)) {
+            throw new IllegalArgumentException("Not sufficient founds to withdraw " + amount);
         }
+        checkUser(userID);
+        this.balance -= amount + WITHDRAWAL_FEE;
     }
 
     private boolean isWithdrawAllowed(final double amount){
         return this.balance >= amount;
     }
 
-    private boolean checkUser(final int id) {
-        return this.holder.getId() == id;
+    private void checkUser(final int id) {
+        if (this.holder.getId() != id) {
+            throw new IllegalArgumentException("The given id is different from the holder of the account");
+        }
     }
 }
