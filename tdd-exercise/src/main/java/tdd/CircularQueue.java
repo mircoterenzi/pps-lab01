@@ -13,4 +13,10 @@ package tdd;
  *   - Introduce methods in the interface in order to make the tests pass.
  *   - Refactor
  */
-public interface CircularQueue { }
+public interface CircularQueue {
+    /**
+     * Add an integer into the queue.
+     * @param i The integer to be added.
+     */
+    void enqueue(int i);
+}
