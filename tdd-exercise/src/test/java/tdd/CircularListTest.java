@@ -1,6 +1,5 @@
 package tdd;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,6 +36,21 @@ public class CircularListTest {
                 () -> assertEquals(1, this.queue.dequeue()),
                 () -> assertEquals(2, this.queue.dequeue()),
                 () -> assertEquals(3, this.queue.dequeue())
+        );
+    }
+
+    @Test
+    public void testEnqueueMoreThanCapacity() {
+        this.queue.enqueue(1);
+        this.queue.enqueue(2);
+        this.queue.enqueue(3);
+        this.queue.enqueue(4);
+        this.queue.enqueue(5);
+        this.queue.enqueue(6);
+        assertAll(
+                () -> assertEquals(4, this.queue.dequeue()),
+                () -> assertEquals(5, this.queue.dequeue()),
+                () -> assertEquals(6, this.queue.dequeue())
         );
     }
 }

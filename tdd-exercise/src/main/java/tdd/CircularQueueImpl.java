@@ -8,6 +8,9 @@ public class CircularQueueImpl implements CircularQueue {
 
     @Override
     public void enqueue(int value) {
+        if (queue.size() > CAPACITY - 1) {
+            queue.removeLast();
+        }
         this.queue.addFirst(value);
     }
 

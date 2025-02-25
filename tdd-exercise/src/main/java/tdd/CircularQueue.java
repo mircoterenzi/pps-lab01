@@ -14,6 +14,13 @@ package tdd;
  *   - Refactor
  */
 public interface CircularQueue {
+
+    /**
+     * Represents the capacity of the queue in number of elements.
+     * Once it's full new elements are added overwriting the oldest one.
+     */
+    int CAPACITY = 3;
+
     /**
      * Add an integer into the queue.
      * @param value The integer to be added.
