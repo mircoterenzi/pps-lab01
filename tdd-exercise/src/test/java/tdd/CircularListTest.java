@@ -12,27 +12,26 @@ public class CircularListTest {
     private static final int CAPACITY = 3;
     private CircularQueue queue;
 
+    private void enqueueIntegersUpTo(int n) {
+        for (int i = 1; i <= n; i++) {
+            this.queue.enqueue(i);
+        }
+    }
+
     @BeforeEach
     public void setUp() {
         this.queue = new CircularQueueImpl(CAPACITY);
     }
 
     @Test
-    public void testEnqueue() {
-        this.queue.enqueue(1);
-    }
-
-    @Test
-    public void testDequeue() {
-        this.queue.enqueue(1);
+    public void testEnqueueDequeue() {
+        enqueueIntegersUpTo(1);
         assertEquals(1, this.queue.dequeue());
     }
 
     @Test
     public void testEnqueueDequeueWithMultipleValues() {
-        this.queue.enqueue(1);
-        this.queue.enqueue(2);
-        this.queue.enqueue(3);
+        enqueueIntegersUpTo(3);
         assertAll(
                 () -> assertEquals(1, this.queue.dequeue()),
                 () -> assertEquals(2, this.queue.dequeue()),
@@ -42,12 +41,7 @@ public class CircularListTest {
 
     @Test
     public void testEnqueueMoreThanCapacity() {
-        this.queue.enqueue(1);
-        this.queue.enqueue(2);
-        this.queue.enqueue(3);
-        this.queue.enqueue(4);
-        this.queue.enqueue(5);
-        this.queue.enqueue(6);
+        enqueueIntegersUpTo(6);
         assertAll(
                 () -> assertEquals(4, this.queue.dequeue()),
                 () -> assertEquals(5, this.queue.dequeue()),
