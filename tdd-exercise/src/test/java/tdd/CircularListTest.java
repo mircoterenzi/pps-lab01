@@ -12,16 +12,19 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CircularListTest {
     private CircularQueue queue;
 
+    @BeforeEach
+    public void setUp() {
+        this.queue = new CircularQueueImpl();
+    }
+
     @Test
     public void testEnqueue() {
-        CircularQueue queue = new CircularQueueImpl();
-        queue.enqueue(1);
+        this.queue.enqueue(1);
     }
 
     @Test
     public void testDequeue() {
-        CircularQueue queue = new CircularQueueImpl();
-        queue.enqueue(1);
-        assertEquals(1, queue.dequeue());
+        this.queue.enqueue(1);
+        assertEquals(1, this.queue.dequeue());
     }
 }
