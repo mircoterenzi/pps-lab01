@@ -26,6 +26,9 @@ public class CircularQueueImpl implements CircularQueue {
 
     @Override
     public int dequeue() {
+        if (queue.isEmpty()) {
+            throw new IllegalStateException("The queue is empty, no element can be dequeue");
+        }
         return this.queue.removeLast();
     }
 }

@@ -54,4 +54,9 @@ public class CircularListTest {
                 () -> assertEquals(6, this.queue.dequeue())
         );
     }
+
+    @Test
+    public void testDequeueEmptyList() {
+        assertThrows(IllegalStateException.class, () -> this.queue.dequeue());
+    }
 }
