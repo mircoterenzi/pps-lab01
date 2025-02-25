@@ -33,11 +33,12 @@ public class SimpleBankAccount implements BankAccount {
 
     @Override
     public void withdraw(final int userID, final double amount) {
-        if (!isWithdrawAllowed(amount)) {
+        double totalAmount = amount + WITHDRAWAL_FEE;
+        if (!isWithdrawAllowed(totalAmount)) {
             throw new IllegalArgumentException("Not sufficient founds to withdraw " + amount);
         }
         checkUser(userID);
-        this.balance -= amount + WITHDRAWAL_FEE;
+        this.balance -= totalAmount;
     }
 
     private boolean isWithdrawAllowed(final double amount){

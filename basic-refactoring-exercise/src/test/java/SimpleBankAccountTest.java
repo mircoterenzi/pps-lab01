@@ -83,4 +83,12 @@ class SimpleBankAccountTest {
                 () -> assertEquals(INITIAL_ACCOUNT_BALANCE, bankAccount.getBalance())
         );
     }
+
+    @Test
+    void testWithdrawEntireBalance() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> bankAccount.withdraw(accountHolder.getId(), INITIAL_ACCOUNT_BALANCE)
+        );
+    }
 }
