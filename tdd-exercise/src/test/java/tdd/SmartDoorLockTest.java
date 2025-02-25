@@ -29,7 +29,7 @@ public class SmartDoorLockTest {
 
     @BeforeEach
     public void createSmartDoorLock() {
-        lock = new SimpleSmartDoorLock();
+        lock = new SmartDoorLockImpl();
     }
 
     @Test

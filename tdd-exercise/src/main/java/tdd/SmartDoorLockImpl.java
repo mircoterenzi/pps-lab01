@@ -1,6 +1,6 @@
 package tdd;
 
-public class SimpleSmartDoorLock implements SmartDoorLock {
+public class SmartDoorLockImpl implements SmartDoorLock {
     private static final int PIN_NOT_SET = -1;
     private static final int PIN_LENGTH = 4;
     private static final int MAX_ATTEMPTS = 3;
@@ -15,7 +15,7 @@ public class SimpleSmartDoorLock implements SmartDoorLock {
         this.pin = PIN_NOT_SET;
     }
 
-    public SimpleSmartDoorLock() {
+    public SmartDoorLockImpl() {
         initializeVariables();
     }
 
