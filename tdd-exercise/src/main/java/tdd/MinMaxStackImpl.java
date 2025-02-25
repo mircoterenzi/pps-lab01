@@ -1,14 +1,11 @@
 package tdd;
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MinMaxStackImpl implements MinMaxStack {
-    private final Stack<Integer> values = new Stack<>();
-
-    @Override
-    public void push(int value) {
-        this.values.add(value);
-    }
+    private final List<Integer> values = new ArrayList<>();
+    private final List<Integer> ordered = new ArrayList<>();
 
     private void checkStackIsNotEmpty() {
         if (isEmpty()) {
@@ -17,37 +14,39 @@ public class MinMaxStackImpl implements MinMaxStack {
     }
 
     @Override
+    public void push(int value) {
+        if (isEmpty() || value < ordered.getFirst()) {
+            ordered.addFirst(value);
+        } else if (value > ordered.getLast()) {
+            ordered.addLast(value);
+        }
+        this.values.add(value);
+    }
+
+    @Override
     public int pop() {
         checkStackIsNotEmpty();
-        return values.pop();
+        Integer value = values.removeLast();
+        ordered.remove(value);
+        return value;
     }
 
     @Override
     public int peek() {
         checkStackIsNotEmpty();
-        return values.peek();
+        return values.getLast();
     }
 
     @Override
     public int getMin() {
-        int min = values.getFirst();
-        for (int i = 1; i < values.size(); i++) {
-            if (min > values.get(i)) {
-                min = values.get(i);
-            }
-        }
-        return min;
+        checkStackIsNotEmpty();
+        return ordered.getFirst();
     }
 
     @Override
     public int getMax() {
-        int max = values.getFirst();
-        for (int i = 1; i < values.size(); i++) {
-            if (max < values.get(i)) {
-                max = values.get(i);
-            }
-        }
-        return max;
+        checkStackIsNotEmpty();
+        return ordered.getLast();
     }
 
     @Override

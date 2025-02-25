@@ -12,9 +12,9 @@ class MinMaxStackImplTest {
     private static final int EMPTY_STACK_SIZE = 0;
     private static final int SINGLE_ELEMENT_STACK_SIZE = 1;
     private static final int POPULATED_STACK_SIZE = VALUES.length;
-    private static final int MAX_VALUE = Arrays.stream(VALUES).max().orElseThrow();
     private static final int MIN_VALUE = Arrays.stream(VALUES).min().orElseThrow();
-    
+    private static final int MAX_VALUE = Arrays.stream(VALUES).max().orElseThrow();
+
     private MinMaxStack stack;
     
     private void populateWithValues(MinMaxStack stack) {
@@ -29,6 +29,14 @@ class MinMaxStackImplTest {
     }
 
     @Test
+    public void testIsInitiallyEmpty() {
+        assertAll(
+                () -> assertTrue(this.stack.isEmpty()),
+                () -> assertEquals(EMPTY_STACK_SIZE, this.stack.size())
+        );
+    }
+
+    @Test
     public void testPopWithEmptyStack() {
         assertThrows(IllegalStateException.class, this.stack::pop);
     }
@@ -39,15 +47,17 @@ class MinMaxStackImplTest {
     }
 
     @Test
-    public void testIsInitiallyEmpty() {
-        assertAll(
-                () -> assertTrue(this.stack.isEmpty()),
-                () -> assertEquals(EMPTY_STACK_SIZE, this.stack.size())
-        );
+    public void testMinWithEmptyStack() {
+        assertThrows(IllegalStateException.class, this.stack::getMin);
     }
 
     @Test
-    public void testPushValue() {
+    public void testMaxWithEmptyStack() {
+        assertThrows(IllegalStateException.class, this.stack::getMax);
+    }
+
+    @Test
+    public void testPush() {
         this.stack.push(VALUES[0]);
         assertAll(
                 () -> assertFalse(this.stack.isEmpty()),
@@ -56,32 +66,7 @@ class MinMaxStackImplTest {
     }
 
     @Test
-    public void testPushValues() {
-        populateWithValues(this.stack);
-        assertAll(
-                () -> assertFalse(this.stack.isEmpty()),
-                () -> assertEquals(POPULATED_STACK_SIZE, this.stack.size())
-        );
-    }
-
-    @Test
-    public void testPushAndPop() {
-        this.stack.push(VALUES[0]);
-        assertAll(
-                () -> assertEquals(VALUES[0], this.stack.pop()),
-                () -> assertTrue(this.stack.isEmpty())
-        );
-    }
-
-    @Test void testPushAndPopSequence() {
-        populateWithValues(this.stack);
-        for (int i = POPULATED_STACK_SIZE - 1; i > 0; i--) {
-            assertEquals(VALUES[i], this.stack.pop());
-        }
-    }
-
-    @Test
-    public void testPeekDoNotRemoveValue() {
+    public void testPeek() {
         this.stack.push(VALUES[0]);
         assertAll(
                 () -> assertEquals(VALUES[0], this.stack.peek()),
@@ -90,21 +75,52 @@ class MinMaxStackImplTest {
         );
     }
 
-    @Test void testPeekEqualsToPopValue() {
-        int peekValue, popValue;
+    @Test
+    public void testPop() {
         this.stack.push(VALUES[0]);
-        peekValue = this.stack.peek();
-        popValue = this.stack.pop();
-        assertEquals(popValue, peekValue);
+        assertAll(
+                () -> assertEquals(VALUES[0], this.stack.pop()),
+                () -> assertEquals(EMPTY_STACK_SIZE, this.stack.size()),
+                () -> assertTrue(this.stack.isEmpty())
+        );
     }
 
-    @Test void testGetMinValue() {
-        populateWithValues(this.stack);
-        assertEquals(MIN_VALUE, this.stack.getMin());
+    @Test
+    public void testMinMax() {
+        this.stack.push(VALUES[0]);
+        assertAll(
+                () -> assertEquals(VALUES[0], this.stack.getMin()),
+                () -> assertEquals(VALUES[0], this.stack.getMax())
+        );
     }
 
-    @Test void testGetMaxValue() {
+    @Test
+    public void testPopSequenceWithMultipleElements() {
         populateWithValues(this.stack);
-        assertEquals(MAX_VALUE, this.stack.getMax());
+        for (int i = POPULATED_STACK_SIZE - 1; i > 0; i--) {
+            assertEquals(VALUES[i], this.stack.pop());
+        }
+    }
+
+    @Test
+    public void testMinMaxMultipleElements() {
+        populateWithValues(this.stack);
+        assertAll(
+                () -> assertEquals(MIN_VALUE, this.stack.getMin()),
+                () -> assertEquals(MAX_VALUE, this.stack.getMax())
+        );
+    }
+
+    @Test
+    public void testMinMaxWhenCurrentMinMaxRemoved() {
+        this.stack.push(VALUES[0]);
+        this.stack.push(MAX_VALUE);
+        this.stack.push(MIN_VALUE);
+        this.stack.pop();
+        this.stack.pop();
+        assertAll(
+                () -> assertEquals(VALUES[0], this.stack.getMin()),
+                () -> assertEquals(VALUES[0], this.stack.getMax())
+        );
     }
 }
