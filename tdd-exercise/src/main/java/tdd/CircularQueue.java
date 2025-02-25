@@ -19,4 +19,10 @@ public interface CircularQueue {
      * @param i The integer to be added.
      */
     void enqueue(int i);
+
+    /**
+     * Removes and return the last element of the queue.
+     * @return The last element of the queue.
+     */
+    int dequeue();
 }

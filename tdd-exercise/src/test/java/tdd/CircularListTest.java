@@ -17,4 +17,11 @@ public class CircularListTest {
         CircularQueue queue = new CircularQueueImpl();
         queue.enqueue(1);
     }
+
+    @Test
+    public void testDequeue() {
+        CircularQueue queue = new CircularQueueImpl();
+        queue.enqueue(1);
+        assertEquals(1, queue.dequeue());
+    }
 }

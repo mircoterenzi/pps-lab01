@@ -5,4 +5,9 @@ public class CircularQueueImpl implements CircularQueue {
     public void enqueue(int i) {
 
     }
+
+    @Override
+    public int dequeue() {
+        return 1;
+    }
 }
