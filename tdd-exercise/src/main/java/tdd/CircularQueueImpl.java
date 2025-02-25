@@ -1,13 +1,18 @@
 package tdd;
 
-public class CircularQueueImpl implements CircularQueue {
-    @Override
-    public void enqueue(int i) {
+import java.util.ArrayList;
+import java.util.List;
 
+public class CircularQueueImpl implements CircularQueue {
+    private final List<Integer> queue = new ArrayList<>();
+
+    @Override
+    public void enqueue(int value) {
+        this.queue.addFirst(value);
     }
 
     @Override
     public int dequeue() {
-        return 1;
+        return this.queue.removeLast();
     }
 }

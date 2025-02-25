@@ -27,4 +27,16 @@ public class CircularListTest {
         this.queue.enqueue(1);
         assertEquals(1, this.queue.dequeue());
     }
+
+    @Test
+    public void testEnqueueDequeueWithMultipleValues() {
+        this.queue.enqueue(1);
+        this.queue.enqueue(2);
+        this.queue.enqueue(3);
+        assertAll(
+                () -> assertEquals(1, this.queue.dequeue()),
+                () -> assertEquals(2, this.queue.dequeue()),
+                () -> assertEquals(3, this.queue.dequeue())
+        );
+    }
 }

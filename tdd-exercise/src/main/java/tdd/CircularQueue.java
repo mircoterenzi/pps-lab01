@@ -16,9 +16,9 @@ package tdd;
 public interface CircularQueue {
     /**
      * Add an integer into the queue.
-     * @param i The integer to be added.
+     * @param value The integer to be added.
      */
-    void enqueue(int i);
+    void enqueue(int value);
 
     /**
      * Removes and return the last element of the queue.
