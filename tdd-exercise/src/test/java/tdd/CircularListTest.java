@@ -9,11 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
  * The test suite for testing the CircularList implementation
  */
 public class CircularListTest {
+    private static final int CAPACITY = 3;
     private CircularQueue queue;
 
     @BeforeEach
     public void setUp() {
-        this.queue = new CircularQueueImpl();
+        this.queue = new CircularQueueImpl(CAPACITY);
     }
 
     @Test
